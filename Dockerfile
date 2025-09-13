@@ -1,10 +1,8 @@
-FROM node:8-alpine
-
-LABEL maintainer="etienne@tomochain.com"
+FROM node:10-alpine
 
 ENV WS_SECRET ''
 
-WORKDIR /netstats
+WORKDIR /ethstats
 
 COPY ./ ./
 
