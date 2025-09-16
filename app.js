@@ -366,12 +366,15 @@ api.on('connection', function (spark)
 });
 
 
+const network = process.env.NETWORK
+var NODE_BASIC = require(`./configs/nodes.${network}.json`)
 
 client.on('connection', function (clientSpark)
 {
 	clientSpark.on('ready', function (data)
 	{
-		clientSpark.emit('init', { nodes: Nodes.all() });
+		const nodes = Nodes.all().length ? Nodes.all() : NODE_BASIC
+		clientSpark.emit('init', { nodes: nodes });
 
 		Nodes.getCharts();
 	});
@@ -408,6 +411,6 @@ var nodeCleanupTimeout = setInterval( function ()
 
 }, 1000*60*60);
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 3001);
 
 module.exports = server;
